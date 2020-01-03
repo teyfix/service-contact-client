@@ -1,0 +1,12 @@
+:host {
+  padding: 1em;
+
+  &, form {
+    margin: auto;
+  }
+
+  form {
+    min-width: 16em;
+    max-width: 20em;
+  }
+}

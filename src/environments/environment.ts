@@ -2,8 +2,17 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { VerboseLevel } from '../app/constant/verbose-level';
+
 export const environment = {
-  production: false
+  production: false,
+  baseURL: 'http://localhost:3000',
+  verboseLevel: VerboseLevel.Error,
+  storage: {
+    space: 2,
+    prefix: 'service_contact'
+  },
+  phoneLocal: 'ZZ'
 };
 
 /*
