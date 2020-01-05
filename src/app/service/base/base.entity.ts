@@ -13,6 +13,9 @@ export class BaseEntity {
   @Type(() => Date)
   updatedAt: Date;
 
+  // for forms
+  checked: boolean;
+
   toString() {
     return this._id;
   }

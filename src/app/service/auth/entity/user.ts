@@ -1,5 +1,7 @@
 import { IsEmail, IsEnum } from 'class-validator';
-import { IsName } from '../../../../validator/class-validator/is-name';
+import { IsName } from 'src/validator/class-validator';
+
+const firstLetters = Symbol();
 
 export enum Role {
   User = 1,
@@ -19,4 +21,12 @@ export class User {
 
   @IsEnum(Role)
   role: Role;
+
+  get firstLetters(): string {
+    if (!this[firstLetters]) {
+      this[firstLetters] = this.firstName.split(/\s+/).slice(0, 2).concat(this.lastName).map(_ => _.substring(0, 1)).join('');
+    }
+
+    return this[firstLetters];
+  }
 }

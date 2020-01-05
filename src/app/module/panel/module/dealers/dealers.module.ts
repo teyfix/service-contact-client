@@ -9,8 +9,8 @@ import { SharedModule } from 'src/app/module/shared/shared.module';
   declarations: [DealersComponent],
   imports: [
     SharedModule,
-    DealersRoutingModule
-  ]
+    DealersRoutingModule,
+  ],
 })
 export class DealersModule {
 }

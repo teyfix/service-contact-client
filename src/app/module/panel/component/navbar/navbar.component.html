@@ -13,6 +13,17 @@
           </li>
         </ng-container>
       </ul>
+
+      <div class="flex-fill"></div>
+
+      <ng-container *ngIf="user | async as user">
+        <a routerLink="/profile" class="user-profile">
+          <span class="d-inline-block mr-2">{{ user.firstLetters }}</span>
+          <span class="d-inline-block mr-2">{{ user.firstName }} {{ user.lastName }}</span>
+
+          <fa-icon [icon]="['fas', 'user']"></fa-icon>
+        </a>
+      </ng-container>
     </nav>
   </div>
 

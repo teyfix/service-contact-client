@@ -1,12 +1,8 @@
 import { switchMap } from 'rxjs/operators';
 import { validateOrReject } from 'class-validator';
-import { OperatorFunction } from 'rxjs';
 import { ValidationErrors } from 'src/helper/validation-errors';
 
-export function validate$<T, U extends object>(): OperatorFunction<U[], T[]>;
-export function validate$<T, U extends object>(): OperatorFunction<U, T>;
-
-export function validate$() {
+export const validate$ = () => {
   return switchMap(async data => {
     const validateFn = async input => {
       try {
@@ -24,4 +20,4 @@ export function validate$() {
 
     return validateFn(data);
   });
-}
+};

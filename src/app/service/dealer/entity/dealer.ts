@@ -1,5 +1,5 @@
-import { IsName } from '../../../../validator/class-validator/is-name';
-import { IsPhone } from '../../../../validator/class-validator/is-phone';
+import { IsName } from 'src/validator/class-validator';
+import { IsPhone } from 'src/validator/class-validator';
 import { ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { BaseEntity } from '../../base/base.entity';

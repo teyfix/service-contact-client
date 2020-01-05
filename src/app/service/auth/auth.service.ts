@@ -2,23 +2,23 @@ import { Injectable } from '@angular/core';
 import { map, share, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LoginPayload } from './payload/login-payload';
-import { fromValidate } from '../../../helper/from-validate';
-import { transformAndValidate } from '../../../helper/transform-and-validate';
+import { fromValidate } from 'src/helper/from-validate';
+import { transformAndValidate } from 'src/helper/transform-and-validate';
 import { Session } from './entity/session';
 import { User } from './entity/user';
-import { storage } from '../../../helper/storage';
+import { storage } from 'src/helper/storage';
 import { ReplaySubject } from 'rxjs';
 import { RegisterPayload } from './payload/register-payload';
 import { ResetPasswordPayload } from './payload/reset-password-payload';
-import { Verbose } from '../../../helper/verbose';
-import { ValidationErrors } from '../../../helper/validation-errors';
+import { Verbose } from 'src/helper/verbose';
+import { ValidationErrors } from 'src/helper/validation-errors';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  user = new ReplaySubject(1);
+  user = new ReplaySubject<User>(1);
   authState = this.user.pipe(map(Boolean), shareReplay(1));
 
   constructor(private readonly httpClient: HttpClient) {
@@ -28,7 +28,7 @@ export class AuthService {
   getAuth() {
     return this.httpClient.get<object>('/session').pipe(
       transformAndValidate(User),
-      tap(user => this.user.next(user)),
+      tap((user: User) => this.user.next(user)),
       share(),
     );
   }

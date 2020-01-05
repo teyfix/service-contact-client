@@ -37,6 +37,16 @@ export class DealerService {
   }
 
   paginate() {
-    return this.paginatorService.paginate('/dealer', Dealer);
+    return this.paginatorService.paginate('/dealer', Dealer, this.dealersSubject);
+  }
+
+  delete(dealer: Dealer) {
+    return this.httpClient.delete('/dealer/' + dealer._id).pipe(
+      tap(() => this.dealersSubject.next(null)),
+    ).toPromise();
+  }
+
+  deleteBatch(dealers: Dealer[]) {
+    return Promise.all(dealers.map(dealer => this.delete(dealer)));
   }
 }

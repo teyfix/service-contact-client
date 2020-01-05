@@ -1,0 +1,22 @@
+<div class="p-4">
+  <ng-container *ngIf="title">
+    <div class="px-2">
+      <h4>{{title}}</h4>
+    </div>
+  </ng-container>
+
+  <hr class="w-100">
+
+  <ng-container *ngIf="message">
+    <div class="px-2">
+      <p>{{ message }}</p>
+    </div>
+  </ng-container>
+
+  <hr class="w-100">
+
+  <div class="d-flex justify-content-end px-2">
+    <button class="btn btn-sm btn-danger mr-3" (click)="reject()">{{rejectButton}}</button>
+    <button class="btn btn-sm btn-primary" (click)="approve()">{{approveButton}}</button>
+  </div>
+</div>

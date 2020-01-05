@@ -1,0 +1,16 @@
+:host {
+  .user-profile {
+    span {
+      user-select: none;
+      pointer-events: none;
+    }
+
+    &:hover span:nth-child(1) {
+      display: none !important;
+    }
+
+    &:not(:hover) span:nth-child(2) {
+      display: none !important;
+    }
+  }
+}

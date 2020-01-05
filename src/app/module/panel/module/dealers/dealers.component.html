@@ -1,4 +1,35 @@
-<h1>Bayiler</h1>
+<div class="d-flex align-items-center">
+  <h1>Bayiler</h1>
+  <div class="flex-fill"></div>
+  <div class="controls">
+    <a class="btn btn-sm btn-outline-primary mr-2" routerLink="/panel/dealers/create">
+      <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+    </a>
+
+    <ng-container *ngIf="select; else showEdit">
+      <button
+          (confirm)="deleteSelected()"
+          (reject)="toggleSelect()"
+          [disabled]="!selectedCount"
+          appConfirm="Seçilen bayiler silinecek onaylıyor musunuz?"
+          class="btn btn-sm btn-outline-danger mr-4"
+          title="Uyarı"
+      >
+        <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+      </button>
+
+      <button (click)="toggleSelect()" class="btn btn-sm btn-outline-secondary">
+        <fa-icon [icon]="['fas', 'times']"></fa-icon>
+      </button>
+    </ng-container>
+
+    <ng-template #showEdit>
+      <button (click)="toggleSelect()" class="btn btn-sm btn-outline-success">
+        <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+      </button>
+    </ng-template>
+  </div>
+</div>
 
 <app-paginator-controls [paginator]="dealers">
   <ng-container *ngIf="dealers | async as dealers">
@@ -9,6 +40,10 @@
           <th>İsim</th>
           <th>Şehir</th>
           <th>Telefon</th>
+
+          <th class="td-min px-4">
+            {{ select ? "Seç" : "Eylemler" }}
+          </th>
         </tr>
         </thead>
         <tbody>
@@ -16,6 +51,33 @@
           <td>{{dealer.title}}</td>
           <td>{{dealer.city.title}}</td>
           <td>{{dealer.phone}}</td>
+
+
+          <td>
+            <div class="d-flex justify-content-center">
+              <ng-container *ngIf="select; else showActions">
+                <!--suppress HtmlFormInputWithoutLabel -->
+                <input [(ngModel)]="dealer.checked" [id]="dealer._id" type="checkbox">
+                <label [for]="dealer._id"></label>
+              </ng-container>
+
+              <ng-template #showActions>
+                <button class="btn btn-sm btn-outline-success mr-2">
+                  <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+                </button>
+
+                <button
+                    (confirm)="delete(dealer)"
+                    appConfirm="{{dealer.title}} silinecek onaylıyor musunuz?"
+                    class="btn btn-sm btn-outline-danger"
+                    title="Uyarı"
+                >
+                  <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+                </button>
+              </ng-template>
+            </div>
+          </td>
+
         </tr>
         </tbody>
       </table>

@@ -9,13 +9,15 @@ import { BaseUrlInterceptor } from './interceptor/base-url.interceptor';
 import { CreateDealerComponent } from 'src/app/modal/create-dealer/create-dealer.component';
 import { SharedModule } from 'src/app/module/shared/shared.module';
 import { ToastComponent } from './component/toast/toast.component';
+import { ConfirmComponent } from './component/confirm/confirm.component';
 
 @NgModule({
-  entryComponents: [CreateDealerComponent],
+  entryComponents: [CreateDealerComponent, ConfirmComponent],
   declarations: [
     AppComponent,
     CreateDealerComponent,
     ToastComponent,
+    ConfirmComponent,
   ],
   imports: [
     BrowserModule,

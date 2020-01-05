@@ -42,12 +42,12 @@ export class AppComponent implements OnInit {
         }
       }),
       switchMap(async route => {
-        if (route.component) {
+        if (route && route.component) {
           this.activeModal = this.ngbModal.open(route.component);
 
           const {result, componentInstance: {done}} = this.activeModal;
 
-          await merge(done || of(), result).pipe(first()).toPromise();
+          await merge(done || of(), result.catch(() => void 0)).pipe(first()).toPromise();
 
           if (route.data && route.data.previous) {
             await this.router.navigateByUrl(route.data.previous);
