@@ -1,18 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { FormComponentHelper } from 'src/app/helper/form-component.helper';
+import { FormComponentHelper } from 'src/helper/form-component.helper';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/service/auth/auth.service';
-import { emailValidator, nameValidator, nameWithSpacesValidator, passwordValidator } from 'src/app/validator/form-validator';
+import {
+  emailValidator,
+  nameValidator,
+  nameWithSpacesValidator,
+  passwordValidator,
+} from 'src/validator/form-validator';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent extends FormComponentHelper implements OnInit {
   constructor(
     private readonly authService: AuthService,
-    private readonly formBuilder: FormBuilder
+    private readonly formBuilder: FormBuilder,
   ) {
     super();
   }
@@ -21,14 +26,14 @@ export class RegisterComponent extends FormComponentHelper implements OnInit {
     this.formGroup = this.formBuilder.group({
       ready: [true, Validators.requiredTrue],
 
-      email: ['', [Validators.required, emailValidator]],
-      password: ['', [Validators.required, Validators.minLength(6), passwordValidator]],
-      firstName: ['', [Validators.required, nameWithSpacesValidator]],
-      lastName: ['', [Validators.required, nameValidator]]
+      email: [null, [Validators.required, emailValidator]],
+      password: [null, [Validators.required, Validators.minLength(6), passwordValidator]],
+      firstName: [null, [Validators.required, nameWithSpacesValidator]],
+      lastName: [null, [Validators.required, nameValidator]],
     });
   }
 
   submit($event: Event) {
-    super.submit($event, payload => this.authService.createUser(payload).toPromise());
+    super.submit($event, payload => this.authService.createUser(payload));
   }
 }

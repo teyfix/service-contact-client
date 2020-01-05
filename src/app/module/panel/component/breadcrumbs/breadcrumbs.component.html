@@ -1,0 +1,16 @@
+<div *ngIf="breadcrumbs | async as breadcrumbs" class="container">
+  <nav>
+    <ol class="breadcrumb">
+      <li *ngFor="let breadcrumb of breadcrumbs" class="breadcrumb-item" [class.active]="breadcrumb.last">
+        <ng-container *ngIf="breadcrumb.last; else link">
+          {{breadcrumb.label}}
+        </ng-container>
+        <ng-template #link>
+          <a [routerLink]="breadcrumb.routerLink">
+            {{breadcrumb.label}}
+          </a>
+        </ng-template>
+      </li>
+    </ol>
+  </nav>
+</div>

@@ -10,7 +10,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => {
       return import('./module/auth/auth.module').then(m => m.AuthModule);
-    }
+    },
   },
   {
     path: 'panel',
@@ -18,14 +18,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => {
       return import('./module/panel/panel.module').then(m => m.PanelModule);
-    }
+    },
   },
-  {path: '**', redirectTo: 'auth'}
+  {path: '**', redirectTo: 'auth'},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {
 }

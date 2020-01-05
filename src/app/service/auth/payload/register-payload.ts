@@ -1,7 +1,7 @@
 import { IsEmail } from 'class-validator';
-import { IsPassword } from '../../../validator/class-validator/is-password';
-import { IsName } from '../../../validator/class-validator/is-name';
-import { sanitizeNameString } from '../../../helper/sanitize-name-string';
+import { IsPassword } from '../../../../validator/class-validator/is-password';
+import { IsName } from '../../../../validator/class-validator/is-name';
+import { sanitizeNameString } from '../../../../helper/sanitize-name-string';
 
 export class RegisterPayload {
   @IsEmail()

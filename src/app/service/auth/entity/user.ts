@@ -1,5 +1,5 @@
 import { IsEmail, IsEnum } from 'class-validator';
-import { IsName } from '../../../validator/class-validator/is-name';
+import { IsName } from '../../../../validator/class-validator/is-name';
 
 export enum Role {
   User = 1,

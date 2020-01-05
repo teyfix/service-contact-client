@@ -6,21 +6,29 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { TokenInterceptor } from './interceptor/token.interceptor';
 import { BaseUrlInterceptor } from './interceptor/base-url.interceptor';
+import { CreateDealerComponent } from 'src/app/modal/create-dealer/create-dealer.component';
+import { SharedModule } from 'src/app/module/shared/shared.module';
+import { ToastComponent } from './component/toast/toast.component';
 
 @NgModule({
+  entryComponents: [CreateDealerComponent],
   declarations: [
-    AppComponent
+    AppComponent,
+    CreateDealerComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+
+    SharedModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptor, multi: true},
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

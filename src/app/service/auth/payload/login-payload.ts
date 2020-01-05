@@ -1,5 +1,5 @@
 import { IsEmail } from 'class-validator';
-import { IsPassword } from '../../../validator/class-validator/is-password';
+import { IsPassword } from '../../../../validator/class-validator/is-password';
 
 export class LoginPayload {
   @IsEmail()

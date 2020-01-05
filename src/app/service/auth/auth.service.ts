@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { map, share, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { LoginPayload } from './payload/login-payload';
-import { fromValidate } from '../../helper/from-validate';
-import { transformAndValidate } from '../../helper/transform-and-validate';
+import { fromValidate } from '../../../helper/from-validate';
+import { transformAndValidate } from '../../../helper/transform-and-validate';
 import { Session } from './entity/session';
 import { User } from './entity/user';
-import { storage } from '../../helper/storage';
+import { storage } from '../../../helper/storage';
 import { ReplaySubject } from 'rxjs';
 import { RegisterPayload } from './payload/register-payload';
 import { ResetPasswordPayload } from './payload/reset-password-payload';
-import { Verbose } from '../../helper/verbose';
-import { ValidationErrors } from '../../helper/validation-errors';
+import { Verbose } from '../../../helper/verbose';
+import { ValidationErrors } from '../../../helper/validation-errors';
 
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   user = new ReplaySubject(1);
@@ -26,35 +26,35 @@ export class AuthService {
   }
 
   getAuth() {
-    return this.httpClient.get<User>('/session').pipe(
+    return this.httpClient.get<object>('/session').pipe(
       transformAndValidate(User),
       tap(user => this.user.next(user)),
-      share()
+      share(),
     );
   }
 
   createSession(payload: LoginPayload) {
     return fromValidate(LoginPayload, payload).pipe(
-      switchMap(body => this.httpClient.post('/session', body)),
+      switchMap(body => this.httpClient.post<object>('/session', body)),
       transformAndValidate(Session),
       switchMap(() => this.getAuth()),
-      share()
+      share(),
     );
   }
 
   createUser(payload: RegisterPayload) {
     return fromValidate(RegisterPayload, payload).pipe(
-      switchMap(body => this.httpClient.post('/user', body)),
+      switchMap(body => this.httpClient.post<object>('/user', body)),
       transformAndValidate(User),
       switchMap(() => this.createSession({email: payload.email, password: payload.password})),
-      share()
+      share(),
     );
   }
 
   resetPassword(payload: ResetPasswordPayload) {
     return fromValidate(ResetPasswordPayload, payload).pipe(
-      switchMap(body => this.httpClient.post('/reset-password', body)),
-      share()
+      switchMap(body => this.httpClient.post<void>('/reset-password', body)),
+      share(),
     );
   }
 
@@ -63,7 +63,10 @@ export class AuthService {
       await fromValidate(Session, storage).toPromise();
       await this.getAuth().toPromise();
     } catch (e) {
-      if (e instanceof ValidationErrors) {
+      if (
+        e instanceof ValidationErrors ||
+        e instanceof HttpErrorResponse && e.status === 401
+      ) {
         this.user.next(null);
       } else {
         throw e;

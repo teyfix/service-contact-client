@@ -12,4 +12,8 @@ export class BaseEntity {
   @IsDate()
   @Type(() => Date)
   updatedAt: Date;
+
+  toString() {
+    return this._id;
+  }
 }

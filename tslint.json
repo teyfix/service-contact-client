@@ -1,6 +1,8 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "variable-name": false,
+    "semicolon": false,
     "new-parens": false,
     "array-type": false,
     "arrow-parens": false,
@@ -72,7 +74,6 @@
       true,
       "single"
     ],
-    "trailing-comma": false,
     "no-conflicting-lifecycle": true,
     "no-host-metadata-property": true,
     "no-input-rename": true,
