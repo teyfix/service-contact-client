@@ -1,31 +1,33 @@
-<ng-container *ngIf="dealers | async as dealers">
-  <h1>Bayiler</h1>
+<h1>Bayiler</h1>
 
-  <ng-container *ngIf="dealers.length; else empty">
-    <table class="table table-striped">
-      <thead>
-      <tr>
-        <th>İsim</th>
-        <th>Şehir</th>
-        <th>Telefon</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let dealer of dealers">
-        <td>{{dealer.title}}</td>
-        <td>{{dealer.city.title}}</td>
-        <td>{{dealer.phone}}</td>
-      </tr>
-      </tbody>
-    </table>
+<app-paginator-controls [paginator]="dealers">
+  <ng-container *ngIf="dealers | async as dealers">
+    <ng-container *ngIf="dealers.length; else empty">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>İsim</th>
+          <th>Şehir</th>
+          <th>Telefon</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let dealer of dealers">
+          <td>{{dealer.title}}</td>
+          <td>{{dealer.city.title}}</td>
+          <td>{{dealer.phone}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <ng-template #empty>
+      <h2>Sonuç bulunamadı</h2>
+
+      <p>
+        İlk bayiyi oluşturmak için
+        <a routerLink="/panel/dealers/create">tıklayın</a>
+      </p>
+    </ng-template>
   </ng-container>
-
-  <ng-template #empty>
-    <h2>Sonuç bulunamadı</h2>
-
-    <p>
-      İlk bayiyi oluşturmak için
-      <a routerLink="/panel/dealers/create">tıklayın</a>
-    </p>
-  </ng-template>
-</ng-container>
+</app-paginator-controls>

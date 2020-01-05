@@ -6,6 +6,7 @@ import { Dealer } from './entity/dealer';
 import { fromValidate } from 'src/helper/from-validate';
 import { CreateDealer } from './payload/create-dealer';
 import { Subject } from 'rxjs';
+import { PaginatorService } from 'src/app/service/paginate/paginator.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,10 @@ import { Subject } from 'rxjs';
 export class DealerService {
   private readonly dealersSubject = new Subject<void>();
 
-  constructor(private readonly httpClient: HttpClient) {
+  constructor(
+    private readonly httpClient: HttpClient,
+    private readonly paginatorService: PaginatorService,
+  ) {
   }
 
   dealers = this.dealersSubject.pipe(
@@ -30,5 +34,9 @@ export class DealerService {
       transformAndValidate(Dealer),
       share(),
     );
+  }
+
+  paginate() {
+    return this.paginatorService.paginate('/dealer', Dealer);
   }
 }

@@ -1,0 +1,37 @@
+<ng-template #controls>
+  <div class="d-flex justify-content-end align-items-center">
+    <button class="btn" (click)="paginator.prev()">
+      <fa-icon [icon]="['fas', 'chevron-left']"></fa-icon>
+    </button>
+
+    <span>{{ paginator.page }}</span>
+
+    <ng-container *ngIf="paginator.last > (paginator.page + 1)">
+      <fa-icon [icon]="['fas', 'ellipsis-h']"></fa-icon>
+
+      <button class="btn">
+        {{ paginator.last }}
+      </button>
+    </ng-container>
+
+    <button class="btn" (click)="paginator.next()">
+      <fa-icon [icon]="['fas', 'chevron-right']"></fa-icon>
+    </button>
+  </div>
+</ng-template>
+
+<ng-container [ngTemplateOutlet]="controls" *ngIf="showTop"></ng-container>
+
+<ng-container *ngIf="paginator.pending; else showContent">
+  <div class="d-flex justify-content-center py-4">
+    <app-loading></app-loading>
+  </div>
+</ng-container>
+
+<ng-template #showContent>
+  <div class="wrapper mt-4">
+    <ng-content></ng-content>
+  </div>
+</ng-template>
+
+<ng-container [ngTemplateOutlet]="controls" *ngIf="showBottom"></ng-container>

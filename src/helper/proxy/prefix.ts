@@ -45,6 +45,6 @@ export const PrefixProxy = <T extends object>(proxyTarget: T, prefix: string) =>
 
         return key;
       });
-    }
+    },
   });
 };
