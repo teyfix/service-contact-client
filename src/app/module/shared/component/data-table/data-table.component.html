@@ -12,7 +12,7 @@
       <button (confirm)="deleteSelected()"
               (reject)="toggleSelect()"
               [disabled]="!count"
-              [message]="(prefix + '.warning.delete_batch') | translate"
+              [message]="(prefix + '.warning.deleteBatch') | translate"
               class="btn btn-sm btn-outline-danger mr-4">
         <fa-icon [icon]="['fas', 'trash']"></fa-icon>
       </button>

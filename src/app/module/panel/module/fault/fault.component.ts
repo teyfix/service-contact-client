@@ -18,4 +18,7 @@ export class FaultComponent implements OnInit {
     this.faults = this.faultService.paginate();
   }
 
+  onDelete($event: string | string[]) {
+    this.faultService.deleteById($event);
+  }
 }

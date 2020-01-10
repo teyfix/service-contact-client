@@ -59,7 +59,11 @@ export class BaseService<T extends BaseEntity> extends EntityService<T> {
     ) as Observable<T>;
   }
 
-  deleteById(_id: string) {
+  deleteById(_id: string | string[]) {
+    if (_id instanceof Array) {
+      return Promise.all(_id.map(_id$ => this.deleteById(_id$)));
+    }
+
     return fromValidate(FindByIdDto, {_id}).pipe(
       switchMap(body => this.delete(body._id)),
       transformAndValidate(this.entity),

@@ -32,7 +32,8 @@
     },
     "clickToCreate": "Yeni bayi oluştur",
     "warning": {
-      "delete": "{{ title }} silinecek, onaylıyor musunuz?"
+      "delete": "{{ title }} silinecek, onaylıyor musunuz?",
+      "deleteBatch": "Seçilen bayiler silinecek, onaylıyor musunuz?"
     }
   },
   "fault": {
@@ -44,7 +45,8 @@
     },
     "clickToCreate": "Yeni arıza oluştur",
     "warning": {
-      "delete": "{{ title }} silinecek, onaylıyor musunuz?"
+      "delete": "{{ title }} silinecek, onaylıyor musunuz?",
+      "deleteBatch": "Seçilen arızalar silinecek, onaylıyor musunuz?"
     }
   },
   "faultRecord": {
@@ -58,7 +60,8 @@
     },
     "clickToCreate": "Yeni arıza kaydı oluştur",
     "warning": {
-      "delete": "{{ fault.title }} adlı arıza için {{ fieldTeam.title }} ekibine atanan arıza kaydı silinecek, onaylıyor musunuz?"
+      "delete": "{{ fault.title }} adlı arıza için {{ fieldTeam.title }} ekibine atanan arıza kaydı silinecek, onaylıyor musunuz?",
+      "deleteBatch": "Seçilen arıza kayıtları silinecek, onaylıyor musunuz?"
     },
     "fieldTeamOptional": "Saha ekibi seçmemeniz durumunda ilgili saha ekibini sistem atayacaktır."
   },
@@ -74,7 +77,8 @@
     },
     "clickToCreate": "Yeni saha ekibi oluştur",
     "warning": {
-      "delete": "{{ title }} silinecek, onaylıyor musunuz?"
+      "delete": "{{ title }} silinecek, onaylıyor musunuz?",
+      "deleteBatch": "Seçilen saha ekipleri silinecek, onaylıyor musunuz?"
     }
   },
   "connectionProblems": "Sunucuya bağlanılamıyor",

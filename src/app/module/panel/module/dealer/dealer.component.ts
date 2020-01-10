@@ -19,4 +19,8 @@ export class DealerComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     this.dealers = this.dealerService.paginate();
   }
+
+  onDelete($event: string | string[]) {
+    this.dealerService.deleteById($event);
+  }
 }

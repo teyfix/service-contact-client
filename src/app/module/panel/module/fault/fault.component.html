@@ -1,1 +1,6 @@
-<app-data-table [headings]="['title']" [source]="faults" prefix="fault"></app-data-table>
+<app-data-table
+    (delete)="onDelete($event)"
+    [headings]="['title']"
+    [source]="faults"
+    prefix="fault"
+></app-data-table>

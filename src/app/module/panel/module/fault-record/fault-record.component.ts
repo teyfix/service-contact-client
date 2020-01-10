@@ -18,4 +18,7 @@ export class FaultRecordComponent implements OnInit {
     this.faultRecords = this.faultRecordService.paginate();
   }
 
+  onDelete($event: string | string[]) {
+    this.faultRecordService.deleteById($event);
+  }
 }

@@ -17,4 +17,8 @@ export class FieldTeamComponent implements OnInit {
   ngOnInit() {
     this.fieldTeams = this.fieldTeamService.paginate();
   }
+
+  onDelete($event: string | string[]) {
+    this.fieldTeamService.deleteById($event);
+  }
 }
