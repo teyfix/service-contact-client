@@ -31,8 +31,6 @@ export class WriteDealerComponent extends FormComponentHelper<Dealer> implements
       city: [null, [Validators.required, mongoIdValidator]],
     });
 
-    this.formGroup.valueChanges.subscribe(console.log);
-
     if (this.params._id) {
       const subscription = this.dealerService.findById(this.params._id).subscribe(dealer => {
         this.patchFormData(dealer);

@@ -46,8 +46,8 @@ export class WriteFaultRecordComponent extends FormComponentHelper implements On
     });
 
     if (this.params._id) {
-      const subscription = this.faultRecordService.findById(this.params._id).subscribe(fieldTeam => {
-        this.patchFormData(fieldTeam);
+      const subscription = this.faultRecordService.findById(this.params._id).subscribe(faultRecord => {
+        this.patchFormData(faultRecord);
         this.unsubscribe(subscription);
       });
 

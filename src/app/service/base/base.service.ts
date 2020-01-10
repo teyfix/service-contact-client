@@ -1,6 +1,6 @@
 import { fromValidate } from 'src/helper/from-validate';
 import { FindByIdDto } from 'src/app/service/base/dto/find-by-id.dto';
-import { debounceTime, map, share, shareReplay, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, map, share, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { transformAndValidate } from 'src/helper/transform-and-validate';
 import { combineLatest, Observable, OperatorFunction } from 'rxjs';
 import { BaseEntity } from 'src/app/service/base/entity/base.entity';
@@ -23,7 +23,9 @@ export class BaseService<T extends BaseEntity> extends EntityService<T> {
 
   get items(): Observable<T[]> {
     if (!this[itemsSymbol]) {
-      this[itemsSymbol] = this.get('').pipe(
+      this[itemsSymbol] = this.modified.pipe(
+        startWith(null),
+        switchMap(() => this.get('')),
         transformAndValidate(this.entity),
         shareReplay(1),
       );
@@ -43,8 +45,8 @@ export class BaseService<T extends BaseEntity> extends EntityService<T> {
   create(data) {
     return fromValidate(this.CreateDto, data).pipe(
       switchMap(body => this.post('', body)),
-      tap(() => this.modified.next()),
       transformAndValidate(this.entity),
+      tap(() => this.modified.next()),
       share(),
     ) as Observable<T>;
   }
@@ -52,12 +54,15 @@ export class BaseService<T extends BaseEntity> extends EntityService<T> {
   update(id: string, payload) {
     return fromValidate(this.UpdateDto, payload).pipe(
       switchMap(body => this.patch(id, body)),
+      transformAndValidate(this.entity),
+      tap(() => this.modified.next()),
     ) as Observable<T>;
   }
 
   deleteById(_id: string) {
     return fromValidate(FindByIdDto, {_id}).pipe(
       switchMap(body => this.delete(body._id)),
+      transformAndValidate(this.entity),
       tap(() => this.modified.next()),
     ).toPromise();
   }

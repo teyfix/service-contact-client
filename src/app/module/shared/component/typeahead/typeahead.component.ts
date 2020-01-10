@@ -87,8 +87,6 @@ export class TypeaheadComponent extends BaseInput implements OnInit {
   }
 
   writeValue(obj): void {
-    console.log('typeahead.writevalue:', obj);
-
     this.value = obj;
     this.formControl.setValue(obj);
   }

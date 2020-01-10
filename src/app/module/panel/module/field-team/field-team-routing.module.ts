@@ -14,7 +14,7 @@ const routes: Routes = [
         data: {modal: 'WriteFieldTeamComponent', previous: '/panel/field-teams'},
       },
       {
-        path: 'update/:id',
+        path: 'update/:_id',
         data: {modal: 'WriteFieldTeamComponent', previous: '/panel/field-teams'},
       },
     ],

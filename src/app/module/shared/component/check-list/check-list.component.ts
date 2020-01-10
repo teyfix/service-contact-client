@@ -37,8 +37,6 @@ export class CheckListComponent extends BaseInput {
   }
 
   onSelectItem($event: NgbTypeaheadSelectItemEvent) {
-    console.log('checklist.onselectitem:', $event.item);
-
     const item = $event.item;
 
     if (item == null || this.selectedItems.includes(item)) {

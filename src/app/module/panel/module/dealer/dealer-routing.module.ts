@@ -14,7 +14,7 @@ const routes: Routes = [
         data: {modal: 'WriteDealerComponent', previous: '/panel/dealers'},
       },
       {
-        path: 'update/:id',
+        path: 'update/:_id',
         data: {modal: 'WriteDealerComponent', previous: '/panel/dealers'},
       },
     ],

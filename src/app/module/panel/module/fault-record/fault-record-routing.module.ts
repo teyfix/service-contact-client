@@ -14,7 +14,7 @@ const routes: Routes = [
         data: {modal: 'WriteFaultRecordComponent', previous: '/panel/fault-records'},
       },
       {
-        path: 'update/:id',
+        path: 'update/:_id',
         data: {modal: 'WriteFaultRecordComponent', previous: '/panel/fault-records'},
       },
     ],
