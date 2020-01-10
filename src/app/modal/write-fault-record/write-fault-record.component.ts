@@ -7,6 +7,9 @@ import { FaultRecordService } from 'src/app/service/fault-record/fault-record.se
 import { FieldTeamService } from 'src/app/service/field-team/field-team.service';
 import { FaultService } from 'src/app/service/fault/fault.service';
 import { FieldTeam } from 'src/app/service/field-team/entity/field-team';
+import { filter } from 'rxjs/operators';
+import { merge } from 'rxjs';
+import { BaseEntity } from 'src/app/service/base/entity/base.entity';
 
 @Component({
   selector: 'app-write-fault-record',
@@ -20,8 +23,8 @@ export class WriteFaultRecordComponent extends FormComponentHelper implements On
     const {city, fault} = this.formGroup.controls;
 
     return (
-      (city.invalid || city.value._id === fieldTeam.city._id) &&
-      (fault.invalid || fieldTeam.faults.some(fieldTeamFault => fieldTeamFault._id === fault.value._id)) &&
+      (city.valid && city.value._id === fieldTeam.city._id) &&
+      (fault.valid && fieldTeam.faults.some(fieldTeamFault => fieldTeamFault._id === fault.value._id)) &&
       FieldTeam.compare(fieldTeam, input)
     );
   });
@@ -45,6 +48,8 @@ export class WriteFaultRecordComponent extends FormComponentHelper implements On
       fieldTeam: [null, [mongoIdValidator]],
     });
 
+    this.relations();
+
     if (this.params._id) {
       const subscription = this.faultRecordService.findById(this.params._id).subscribe(faultRecord => {
         this.patchFormData(faultRecord);
@@ -63,5 +68,25 @@ export class WriteFaultRecordComponent extends FormComponentHelper implements On
         return this.faultRecordService.create(payload);
       }
     });
+  }
+
+  relations() {
+    const {city, fault, fieldTeam} = this.formGroup.controls;
+    const truthy = () => filter<BaseEntity>(Boolean);
+
+    this.addSubscription(
+      merge(
+        city.valueChanges.pipe(
+          truthy(),
+          filter(value => !value || value._id !== fieldTeam.value.city._id),
+        ),
+        fault.valueChanges.pipe(
+          truthy(),
+          filter(value => !value || !fieldTeam.value.faults.some(item => value._id === item._id)),
+        ),
+      ).subscribe(() => {
+        fieldTeam.setValue(null);
+      }),
+    );
   }
 }
