@@ -18,7 +18,7 @@
     <div class="d-flex justify-content-between mt-4">
       <a class="btn btn-danger" routerLink="/panel/dealers">İptal</a>
       <button [disabled]="formGroup.invalid" class="btn btn-primary" type="submit">
-        {{ (params.id ? 'save' : 'create') | translate }}
+        {{ (params._id ? 'save' : 'create') | translate }}
       </button>
     </div>
   </form>

@@ -1,6 +1,6 @@
 <div class="p-4">
 
-  <h1>{{('fault.' + (params.id ? 'update' : 'create')) | translate}}</h1>
+  <h1>{{('fault.' + (params._id ? 'update' : 'create')) | translate}}</h1>
 
   <form (submit)="submit($event)" [formGroup]="formGroup" class="d-flex flex-column">
     <app-input formControlName="title">
@@ -10,7 +10,7 @@
     <div class="d-flex justify-content-between mt-4">
       <a class="btn btn-danger" routerLink="/panel/faults">İptal</a>
       <button [disabled]="formGroup.invalid" class="btn btn-primary" type="submit">
-        {{ (params.id ? 'save' : 'create') | translate }}
+        {{ (params._id ? 'save' : 'create') | translate }}
       </button>
     </div>
   </form>
