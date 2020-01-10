@@ -23,7 +23,7 @@ export const Verbose = new class {
           return;
         }
 
-        message.unshift(level + ':');
+        // message.unshift(level + ':');
 
         return method.apply(null, message);
       };
