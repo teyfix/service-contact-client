@@ -71,36 +71,31 @@ export class FormComponentHelper<T = any> extends BaseComponent {
     return null;
   }
 
-  private sanitize() {
-    const sanitizer = input => {
-      const output = input instanceof Array ? [] : {};
+  private sanitize(input) {
+    const output = input instanceof Array ? [] : {};
 
-      Object.entries(input).forEach(([key, value]) => {
-        if (value == null) {
-          output[key] = null;
-        } else {
-          if ('object' === typeof value) {
-            if (value instanceof BaseEntity) {
-              output[key] = value._id;
-            } else {
-              output[key] = sanitizer(value);
-            }
+    Object.entries(input).forEach(([key, value]) => {
+      if (value == null) {
+        output[key] = null;
+      } else {
+        if ('object' === typeof value) {
+          if (value instanceof BaseEntity) {
+            output[key] = value._id;
           } else {
-            output[key] = value;
+            output[key] = this.sanitize(value);
           }
+        } else {
+          output[key] = value;
         }
-      });
+      }
+    });
 
-      return output;
-    };
-
-    const {[Ready]: ready, ...payload} = this.formGroup.value;
-
-    return sanitizer(payload);
+    return output;
   }
 
   private resolve(callback: Callback<T>) {
-    const payload = this.sanitize();
+    const {[Ready]: ready, ...formValue} = this.formGroup.value;
+    const payload = this.sanitize(formValue);
 
     this.addSubscription(
       callback(payload).pipe(
