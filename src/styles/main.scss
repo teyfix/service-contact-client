@@ -1,0 +1,24 @@
+@import "./forms";
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.divider-v::after {
+  display: block;
+  width: 1px;
+  color: transparent;
+  content: " ";
+  white-space: pre;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.td-min {
+  width: 1px;
+  white-space: nowrap;
+}
+

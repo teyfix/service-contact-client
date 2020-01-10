@@ -1,0 +1,13 @@
+<ng-container [ngSwitch]="errorState">
+  <ng-container *ngSwitchCase="'required'">Gerekli</ng-container>
+
+  <ng-container *ngSwitchCase="'name'">Sadece harf içerebilir</ng-container>
+  <ng-container *ngSwitchCase="'nameWithSpaces'">Sadece harf ve boşluk içerebilir</ng-container>
+
+  <ng-container *ngSwitchCase="'email'">Geçersiz e-posta</ng-container>
+  <ng-container *ngSwitchCase="'phone'">Geçersiz telefon</ng-container>
+  <ng-container *ngSwitchCase="'password'">En az 1 harf, 1 rakam ve 1 sembol içermeli</ng-container>
+
+  <ng-container *ngSwitchCase="'minlength'">Girilen değer çok kısa</ng-container>
+  <ng-container *ngSwitchCase="'mongoId'">Geçersiz değer</ng-container>
+</ng-container>

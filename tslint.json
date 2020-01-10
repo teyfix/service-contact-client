@@ -1,6 +1,8 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "no-empty-interface": false,
+    "only-arrow-functions": false,
     "variable-name": false,
     "semicolon": false,
     "new-parens": false,

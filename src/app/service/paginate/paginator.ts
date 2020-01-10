@@ -1,81 +1,108 @@
-import { merge, Observable, of, Subject, Subscribable, Subscriber, Subscription } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { merge, Observable, of, Subject, Subscriber, Subscription } from 'rxjs';
 import { Params } from '@angular/router';
-import { catchError, pluck, switchMap, tap, throttleTime } from 'rxjs/operators';
+import { catchError, debounceTime, pluck, switchMap, tap } from 'rxjs/operators';
 import { transformAndValidate } from 'src/helper/transform-and-validate';
+import { ToJson } from 'src/app/interface/to-json';
+import { EntityService } from 'src/app/service/base/interface/entity-service';
+import { BaseEntity } from 'src/app/service/base/entity/base.entity';
 
 interface PaginatorResponse {
   data: object[];
   count: number;
 }
 
-export class Paginator<T> extends Observable<T[]> {
+export class Paginator<T extends BaseEntity> extends Observable<T[]> implements ToJson {
   data: T[];
-  page = 1;
-  count = 0;
   limit = 10;
   pending = false;
+
+  total = 0;
+  canPrev = false;
+  canNext = false;
+  lastPage = 1;
+  currentPage = 1;
 
   private subject = new Subject<void>();
   private subscription: Subscription;
   private readonly subscribers = new Set<Subscriber<T[]>>();
 
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly endpoint: string,
-    private readonly type: new() => T,
-    private readonly changeSubject?: Subscribable<any>,
-  ) {
+  constructor(private readonly service: EntityService) {
     super(subscriber => this.addSubscriber(subscriber));
-
-    this.endpoint = endpoint.replace(/\\+$/, '') + '/paginate';
-    this.changeSubject = this.changeSubject || of();
   }
 
-  get last() {
-    return Math.max(1, Math.ceil(this.count / this.limit));
+  static create<E extends BaseEntity, S extends EntityService<E>>(service: S) {
+    return new Paginator<E>(service);
   }
 
-  next() {
-    if (this.page < this.last) {
-      this.page++;
+  goto(page: number) {
+    page = Math.max(1, Math.min(page, this.lastPage));
+
+    if (this.currentPage !== page) {
+      this.currentPage = page;
       this.subject.next();
     }
 
     return this;
+  }
+
+  first() {
+    return this.goto(1);
   }
 
   prev() {
-    if (this.page > 1) {
-      this.page--;
-      this.subject.next();
-    }
+    return this.goto(this.currentPage - 1);
+  }
 
-    return this;
+  next() {
+    return this.goto(this.currentPage + 1);
+  }
+
+  last() {
+    return this.goto(this.lastPage);
+  }
+
+  toJSON() {
+    return {
+      // data: this.data,
+      page: this.currentPage,
+      count: this.total,
+      limit: this.limit,
+      pending: this.pending,
+    };
   }
 
   private params() {
     const params: Params = {limit: this.limit};
 
-    if (this.page > 1) {
-      params.skip = (this.page - 1) * this.limit;
+    if (this.currentPage > 1) {
+      params.skip = (this.currentPage - 1) * this.limit;
     }
 
     return params;
   }
 
   private request() {
-    return this.httpClient.get<PaginatorResponse>(this.endpoint, {params: this.params()});
+    return this.service.get<PaginatorResponse>('paginate', {params: this.params()});
   }
 
   private generateSource() {
-    return merge(this.subject, this.changeSubject).pipe(
-      throttleTime(50),
+    return merge(this.subject, this.service.modified).pipe(
+      debounceTime(200),
       tap(() => this.pending = true),
       switchMap(() => this.request()),
-      tap(_ => this.count = _.count),
+      tap(_ => {
+        this.total = _.count;
+        this.lastPage = Math.max(1, Math.ceil(_.count / this.limit));
+        this.canPrev = this.currentPage > 1;
+        this.canNext = this.currentPage < this.lastPage;
+
+        if (_.data.length === 0 && _.count > 0) {
+          this.currentPage = this.lastPage;
+          this.subject.next();
+        }
+      }),
       pluck('data'),
-      transformAndValidate<object[], T[]>(this.type),
+      transformAndValidate<object[], T[]>(this.service.entity),
     );
   }
 

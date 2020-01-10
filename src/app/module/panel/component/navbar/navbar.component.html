@@ -2,14 +2,14 @@
 
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light">
-      <a class="navbar-brand" routerLink="/">{{title}}</a>
+      <a class="navbar-brand" routerLink="/">{{title|translate}}</a>
 
       <div class="navbar-brand divider-v"></div>
 
       <ul class="navbar-nav">
         <ng-container *ngFor="let item of menuItems">
           <li class="nav-item">
-            <a [routerLink]="item.routerLink" class="nav-link" routerLinkActive="active">{{item.label}}</a>
+            <a [routerLink]="item.routerLink" class="nav-link" routerLinkActive="active">{{item.label|translate}}</a>
           </li>
         </ng-container>
       </ul>
@@ -17,7 +17,7 @@
       <div class="flex-fill"></div>
 
       <ng-container *ngIf="user | async as user">
-        <a routerLink="/profile" class="user-profile">
+        <a class="user-profile" routerLink="/profile">
           <span class="d-inline-block mr-2">{{ user.firstLetters }}</span>
           <span class="d-inline-block mr-2">{{ user.firstName }} {{ user.lastName }}</span>
 

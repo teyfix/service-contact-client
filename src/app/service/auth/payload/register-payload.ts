@@ -1,9 +1,9 @@
 import { IsEmail } from 'class-validator';
-import { IsPassword } from '../../../../validator/class-validator/is-password';
-import { IsName } from '../../../../validator/class-validator/is-name';
-import { sanitizeNameString } from '../../../../helper/sanitize-name-string';
+import { IsName, IsPassword } from 'src/validator/class-validator';
+import { sanitizeNameString } from 'src/helper/sanitize-name-string';
+import { ToJson } from 'src/app/interface/to-json';
 
-export class RegisterPayload {
+export class RegisterPayload implements ToJson {
   @IsEmail()
   email: string;
 

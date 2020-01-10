@@ -1,1 +1,17 @@
 <router-outlet></router-outlet>
+
+<ng-container *ngIf="pending || connectionProblems">
+  <div class="d-flex justify-content-center align-items-center h-100 w-100">
+    <ng-container *ngIf="pending">
+      <app-loading></app-loading>
+    </ng-container>
+
+    <ng-container *ngIf="connectionProblems">
+      <div class="alert alert-danger">
+        <h1>{{'error'|translate}}</h1>
+        <p>{{'connectionProblems'|translate}}</p>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+

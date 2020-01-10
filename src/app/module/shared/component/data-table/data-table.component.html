@@ -1,0 +1,98 @@
+<div class="d-flex align-items-center">
+  <h1>{{ (prefix + '.plural') | translate }}</h1>
+
+  <div class="flex-fill"></div>
+
+  <a class="btn btn-sm btn-outline-primary mr-2" routerLink="create">
+    <fa-icon [icon]="['fas', 'plus']"></fa-icon>
+  </a>
+
+  <ng-container *ngIf="(source | async)?.length">
+    <ng-container *ngIf="selected; else showEdit">
+      <button (confirm)="deleteSelected()"
+              (reject)="toggleSelect()"
+              [disabled]="!count"
+              [message]="(prefix + '.warning.delete_batch') | translate"
+              class="btn btn-sm btn-outline-danger mr-4">
+        <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+      </button>
+
+      <button (click)="toggleSelect()"
+              class="btn btn-sm btn-outline-secondary">
+        <fa-icon [icon]="['fas', 'times']"></fa-icon>
+      </button>
+    </ng-container>
+
+    <ng-template #showEdit>
+      <button (click)="toggleSelect()"
+              class="btn btn-sm btn-outline-success">
+        <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+      </button>
+    </ng-template>
+  </ng-container>
+</div>
+
+<app-paginator-controls [paginator]="source"></app-paginator-controls>
+
+<ng-container *ngIf="source | async as items; else loading">
+  <ng-container *ngIf="items.length; else empty">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <ng-container *ngFor="let heading of headings">
+          <th>{{ (prefix + '.field.' + heading) | translate }}</th>
+        </ng-container>
+
+        <th class="td-min px-4">{{ (selected ? 'select' : 'actions') | translate }}</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let item of items">
+        <ng-container *ngFor="let heading of headings">
+          <td>{{child(item, heading)}}</td>
+        </ng-container>
+
+        <td>
+          <div class="d-flex justify-content-center">
+            <ng-container *ngIf="selected; else showActions">
+              <!--suppress HtmlFormInputWithoutLabel -->
+              <input [(ngModel)]="selected[item._id]"
+                     [id]="item._id"
+                     type="checkbox">
+              <label [for]="item._id"></label>
+            </ng-container>
+
+            <ng-template #showActions>
+              <a [routerLink]="['update', item._id]"
+                 class="btn btn-sm btn-outline-success mr-2">
+                <fa-icon [icon]="['fas', 'edit']"></fa-icon>
+              </a>
+
+              <button (confirm)="delete.next(item._id)"
+                      [message]="(prefix + '.warning.delete') | translate : item"
+                      class="btn btn-sm btn-outline-danger">
+                <fa-icon [icon]="['fas', 'trash']"></fa-icon>
+              </button>
+            </ng-template>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <ng-template #empty>
+    <h2>{{ 'emptyResult.title' | translate }}</h2>
+
+    <p>
+      <a routerLink="create">{{ (prefix + '.clickToCreate') | translate }}</a>
+    </p>
+  </ng-template>
+</ng-container>
+
+<ng-template #loading>
+  <div class="d-flex justify-content-center">
+    <app-loading></app-loading>
+  </div>
+</ng-template>

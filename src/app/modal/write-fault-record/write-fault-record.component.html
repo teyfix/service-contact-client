@@ -1,0 +1,26 @@
+<div class="p-4">
+
+  <h1>{{('faultRecord.' + (params.id ? 'update' : 'create')) | translate}}</h1>
+
+  <form (submit)="submit($event)" [formGroup]="formGroup" class="d-flex flex-column">
+    <app-typeahead [ngbTypeahead]="citySearch" formControlName="city">
+      {{'faultRecord.field.city'|translate}}
+    </app-typeahead>
+
+    <app-typeahead [ngbTypeahead]="faultSearch" formControlName="fault">
+      {{'faultRecord.field.fault'|translate}}
+    </app-typeahead>
+
+    <app-typeahead [ngbTypeahead]="fieldTeamSearch" formControlName="fieldTeam" hint="faultRecord.fieldTeamOptional">
+      {{'faultRecord.field.fieldTeam'|translate}}
+    </app-typeahead>
+
+    <div class="d-flex justify-content-between mt-4">
+      <a class="btn btn-danger" routerLink="/panel/fault-records">İptal</a>
+      <button [disabled]="formGroup.invalid" class="btn btn-primary" type="submit">
+        {{ (params.id ? 'save' : 'create') | translate }}
+      </button>
+    </div>
+  </form>
+
+</div>

@@ -8,11 +8,15 @@ import { BreadcrumbsComponent } from './component/breadcrumbs/breadcrumbs.compon
 
 
 @NgModule({
-  declarations: [PanelComponent, NavbarComponent, BreadcrumbsComponent],
+  declarations: [
+    PanelComponent,
+    NavbarComponent,
+    BreadcrumbsComponent,
+  ],
   imports: [
     SharedModule,
-    PanelRoutingModule
-  ]
+    PanelRoutingModule,
+  ],
 })
 export class PanelModule {
 }

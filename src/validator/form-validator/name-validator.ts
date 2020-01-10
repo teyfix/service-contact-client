@@ -12,4 +12,4 @@ class NameWithSpacesValidation {
 }
 
 export const nameValidator = classToValidator(NameValidation, 'name');
-export const nameWithSpacesValidator = classToValidator(NameWithSpacesValidation, 'name');
+export const nameWithSpacesValidator = classToValidator(NameWithSpacesValidation, 'nameWithSpaces');

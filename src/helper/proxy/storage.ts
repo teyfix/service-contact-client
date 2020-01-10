@@ -10,7 +10,7 @@ const dispatchEvent = <T extends Storage>(target: T, key: string, oldValue: stri
     url: {value: window.location.href, enumerable: true},
     storageArea: {value: target, enumerable: true},
     returnValue: {value: true, enumerable: true},
-    cancelBubble: {value: false, enumerable: true}
+    cancelBubble: {value: false, enumerable: true},
   });
 
   window.dispatchEvent($event);
@@ -67,6 +67,6 @@ export const StorageProxy = <T extends Storage>(target: T, dispatch = false) => 
       }
 
       return false;
-    }
+    },
   });
 };

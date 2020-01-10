@@ -12,7 +12,7 @@ interface Breadcrumb {
 @Component({
   selector: 'app-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
-  styleUrls: ['./breadcrumbs.component.scss']
+  styleUrls: ['./breadcrumbs.component.scss'],
 })
 export class BreadcrumbsComponent implements OnInit {
   private breadcrumbs: Observable<Breadcrumb[]>;
@@ -34,10 +34,10 @@ export class BreadcrumbsComponent implements OnInit {
           return {
             last: i === (array.length - 1),
             label: part[0].toLocaleUpperCase() + part.substring(1),
-            routerLink: array.slice(0, i).join('/')
+            routerLink: array.slice(0, i).join('/'),
           };
         }).filter(Boolean);
-      })
+      }),
     );
   }
 }

@@ -10,24 +10,28 @@ const routes: Routes = [
     children: [
       {
         path: 'dealers',
-        loadChildren: () => {
-          return import('./module/dealers/dealers.module').then(m => m.DealersModule);
-        }
+        loadChildren: () => import('./module/dealer/dealer.module').then(m => m.DealerModule),
       },
       {
-        path: 'technical-services',
-        loadChildren: () => {
-          return import('./module/technical-services/technical-services.module').then(m => m.TechnicalServicesModule);
-        }
+        path: 'faults',
+        loadChildren: () => import('./module/fault/fault.module').then(m => m.FaultModule),
       },
-      {path: '**', redirectTo: 'dealers'}
-    ]
-  }
+      {
+        path: 'fault-records',
+        loadChildren: () => import('./module/fault-record/fault-record.module').then(m => m.FaultRecordModule),
+      },
+      {
+        path: 'field-teams',
+        loadChildren: () => import('./module/field-team/field-team.module').then(m => m.FieldTeamModule),
+      },
+      {path: '**', redirectTo: 'dealers'},
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class PanelRoutingModule {
 }

@@ -1,0 +1,13 @@
+form {
+  .form-group {
+    margin-bottom: 0;
+
+    .form-control {
+      margin-bottom: 1.4375rem;
+
+      &.is-hinted, &.is-invalid {
+        margin-bottom: 0;
+      }
+    }
+  }
+}

@@ -5,13 +5,16 @@ import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { ValidationErrors } from 'src/helper/validation-errors';
 import { Verbose } from 'src/helper/verbose';
+import { BaseEntity } from 'src/app/service/base/entity/base.entity';
 
 type Callback<T> = (payload) => Observable<T>;
+type Params = { [key: string]: boolean | number | string; } & Partial<BaseEntity>;
 
 export const Ready = 'ready';
 
 export class FormComponentHelper<T = any> extends BaseComponent {
   done = new Subject<void>();
+  params: Params = {};
 
   formGroup: FormGroup;
 
@@ -20,6 +23,18 @@ export class FormComponentHelper<T = any> extends BaseComponent {
 
   setValue<U>(controlName: string, value: U) {
     return this.formGroup.get(controlName).setValue(value);
+  }
+
+  patchFormData<U extends Partial<T>>(value: U) {
+    const formData = this.formGroup.value;
+
+    Object.keys(this.formGroup.controls).forEach(key => {
+      if (key in value) {
+        formData[key] = value[key];
+      }
+    });
+
+    return this.formGroup.setValue(formData);
   }
 
   submit(misc: Event | Callback<T>): void;
@@ -59,7 +74,7 @@ export class FormComponentHelper<T = any> extends BaseComponent {
   private resolve(callback: Callback<T>) {
     const {[Ready]: ready, ...payload} = this.formGroup.value;
 
-    this.subscriptions.add(
+    this.addSubscription(
       callback(payload).pipe(
         take(1),
         catchError(error => {

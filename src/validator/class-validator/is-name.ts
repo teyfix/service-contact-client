@@ -6,11 +6,11 @@ const isString = IsString();
 const message = '$property must contain only letters';
 const matchesName = Matches(
   XRegExp('^\\p{Latin}+$'),
-  {message}
+  {message},
 );
 const matchesNameWithSpaces = Matches(
   XRegExp('^\\p{Latin}+(?: \\p{Latin}+)*$'),
-  {message: message + ' and spaces'}
+  {message: message + ' and spaces'},
 );
 
 export const IsName = (spaces = true): PropertyDecorator => {

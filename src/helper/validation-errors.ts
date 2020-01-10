@@ -1,5 +1,5 @@
 import { ValidationError } from 'class-validator';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 
 export class ValidationErrors extends Error {
   constructor(public readonly errors: ValidationError[]) {

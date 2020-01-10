@@ -1,0 +1,26 @@
+<div class="p-4">
+
+  <h1>{{('dealer.' + (params._id ? 'update' : 'create')) | translate}}</h1>
+
+  <form (submit)="submit($event)" [formGroup]="formGroup" class="d-flex flex-column">
+    <app-input formControlName="title">
+      {{'dealer.field.title'|translate}}
+    </app-input>
+
+    <app-input formControlName="phone" placeholder="+90" type="tel">
+      {{'dealer.field.phone'|translate}}
+    </app-input>
+
+    <app-typeahead [ngbTypeahead]="search" formControlName="city">
+      {{'dealer.field.city'|translate}}
+    </app-typeahead>
+
+    <div class="d-flex justify-content-between mt-4">
+      <a class="btn btn-danger" routerLink="/panel/dealers">İptal</a>
+      <button [disabled]="formGroup.invalid" class="btn btn-primary" type="submit">
+        {{ (params.id ? 'save' : 'create') | translate }}
+      </button>
+    </div>
+  </form>
+
+</div>

@@ -1,29 +1,20 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, OperatorFunction } from 'rxjs';
+import { OperatorFunction } from 'rxjs';
 import { City } from 'src/app/service/location/entity/city';
-import { debounceTime, map, shareReplay, switchMap } from 'rxjs/operators';
-import { transformAndValidate } from 'src/helper/transform-and-validate';
+import { BaseService } from 'src/app/service/base/base.service';
+import { CreateFaultDto } from 'src/app/service/fault/dto/create-fault.dto';
+import { UpdateFaultDto } from 'src/app/service/fault/dto/update-fault.dto';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CityService {
-  constructor(private readonly httpClient: HttpClient) {
-  }
-
-  cities = this.httpClient.get<object[]>('/city').pipe(
-    transformAndValidate(City),
-    shareReplay(1),
-  );
+export class CityService extends BaseService<City> {
+  prefix = 'city';
+  entity = City;
+  CreateDto = CreateFaultDto;
+  UpdateDto = UpdateFaultDto;
 
   typeahead(): OperatorFunction<string, City[]> {
-    return (input: Observable<string>) => {
-      return input.pipe(
-        debounceTime(50),
-        map(text => text.toLocaleLowerCase()),
-        switchMap(text => this.cities.pipe(City.filter(text), City.sort(text))),
-      );
-    };
+    return super.typeahead(City.compare, City.sort);
   }
 }

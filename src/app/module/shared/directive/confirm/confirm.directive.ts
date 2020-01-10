@@ -4,14 +4,14 @@ import { ConfirmComponent } from 'src/app/component/confirm/confirm.component';
 import { BooleanInput } from 'src/decorator/boolean-input';
 
 @Directive({
-  selector: '[appConfirm]',
+  selector: '[confirm]',
 })
 export class ConfirmDirective {
   @Input()
   title: string;
 
   @Input()
-  appConfirm: string;
+  message: string;
 
   @Input()
   approveButton: string;
@@ -37,7 +37,7 @@ export class ConfirmDirective {
     const component = modal.componentInstance;
 
     component.title = this.title || component.title;
-    component.message = this.appConfirm || component.title;
+    component.message = this.message || component.title;
     component.approveButton = this.approveButton || component.approveButton;
     component.rejectButton = this.rejectButton || component.rejectButton;
 

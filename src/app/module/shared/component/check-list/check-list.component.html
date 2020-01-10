@@ -1,0 +1,23 @@
+<label #labelElement [for]="id">
+  <ng-content></ng-content>
+</label>
+
+<div class="d-flex flex-wrap" *ngIf="selectedItems?.length">
+  <ng-container *ngFor="let item of selectedItems">
+    <div class="d-flex selected-item align-items-center">
+      <span class="text-muted remove-item" (click)="removeItem(item)">
+        <fa-icon [icon]="['fas', 'times']" size="xs"></fa-icon>
+      </span>
+
+      <span>{{item}}</span>
+    </div>
+  </ng-container>
+</div>
+
+<app-typeahead
+    (blur)="onTouched()"
+    (selectItem)="onSelectItem($event)"
+    [formControl]="formControl"
+    [ngbTypeahead]="ngbTypeahead"
+    [placeholder]="placeholder || labelElement.innerText"
+></app-typeahead>

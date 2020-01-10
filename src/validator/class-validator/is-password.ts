@@ -5,7 +5,7 @@ const isString = IsString();
 const minLength = MinLength(6);
 const matches = Matches(
   XRegExp('^(?=.*[\\pL])(?=.*[0-9])(?=.*[^\\pL0-9]).{6,}$'),
-  {message: '$property must contain letter, number and symbol'}
+  {message: '$property must contain letter, number and symbol'},
 );
 
 export const IsPassword = (): PropertyDecorator => {

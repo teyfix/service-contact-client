@@ -1,0 +1,32 @@
+<label #labelElement [for]="id">
+  <ng-content></ng-content>
+</label>
+
+<!--suppress HtmlFormInputWithoutLabel -->
+<input
+    (blur)="onBlur($event)"
+    (selectItem)="onSelectItem($event)"
+    [autocomplete]="autocomplete"
+    [class.is-hinted]="hint"
+    [class.is-invalid]="errorCode"
+    [container]="container"
+    [formControl]="formControl"
+    [id]="id"
+    [inputFormatter]="inputFormatter"
+    [ngbTypeahead]="ngbTypeahead"
+    [placeholder]="placeholder || labelElement.innerText"
+    [placement]="placement"
+    [required]="required"
+    [resultFormatter]="resultFormatter"
+    [resultTemplate]="resultTemplate"
+    [type]="type"
+    class="form-control"
+>
+
+<ng-container *ngIf="!errorCode && hint">
+  <app-hint>{{hint | translate}}</app-hint>
+</ng-container>
+
+<ng-container *ngIf="errorCode">
+  <app-input-error [errorState]="errorCode"></app-input-error>
+</ng-container>

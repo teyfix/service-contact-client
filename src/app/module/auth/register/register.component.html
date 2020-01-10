@@ -1,98 +1,42 @@
-<h3>Kayıt ol</h3>
+<h3>{{'register'|translate}}</h3>
 
 <form (submit)="submit($event)" [formGroup]="formGroup" class="d-flex flex-column" novalidate>
   <div *ngIf="errorResponse" class="alert alert-danger mt-2">
     <ng-container [ngSwitch]="errorResponse.status">
       <ng-container *ngSwitchCase="409">
-        Bu e-posta adresi kullanımda. Şifrenizi unuttuysanız <a routerLink="/auth/reset-password">burayı tıklayarak</a>
-        sıfırlayabilirsiniz.
+        <p [innerHTML]="'register.conflict'|translate"></p>
       </ng-container>
 
       <ng-container *ngSwitchDefault>
-        Hata
+        {{'error'|translate}}
       </ng-container>
     </ng-container>
   </div>
 
-  <div class="form-group">
-    <label for="firstName">Ad</label>
-    <input [class.is-invalid]="error('firstName')"
-           class="form-control text-capitalize"
-           formControlName="firstName"
-           id="firstName"
-           placeholder="Ad"
-           type="firstName">
+  <app-input formControlName="firstName">
+    {{'firstName'|translate}}
+  </app-input>
 
-    <div class="invalid-feedback">
-      <ng-container [ngSwitch]="error('firstName')">
-        <ng-container *ngSwitchCase="'required'">Bu alan gerekli</ng-container>
-        <ng-container *ngSwitchCase="'name'">Ad sadece harf ve boşluk içerebilir</ng-container>
-      </ng-container>
-    </div>
-  </div>
+  <app-input formControlName="lastName">
+    {{'lastName'|translate}}
+  </app-input>
 
-  <div class="form-group">
-    <label for="lastName">Soyad</label>
-    <input [class.is-invalid]="error('lastName')"
-           class="form-control text-capitalize"
-           formControlName="lastName"
-           id="lastName"
-           placeholder="Soyad"
-           type="lastName">
+  <app-input formControlName="email" type="email">
+    {{'email'|translate}}
+  </app-input>
 
-    <div class="invalid-feedback">
-      <ng-container [ngSwitch]="error('lastName')">
-        <ng-container *ngSwitchCase="'required'">Bu alan gerekli</ng-container>
-        <ng-container *ngSwitchCase="'name'">Soyad sadece harf içerebilir</ng-container>
-      </ng-container>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="email">E-posta</label>
-    <input [class.is-invalid]="error('email')"
-           autocomplete="new-email"
-           class="form-control"
-           formControlName="email"
-           id="email"
-           placeholder="E-posta"
-           type="email">
-
-    <div class="invalid-feedback">
-      <ng-container [ngSwitch]="error('email')">
-        <ng-container *ngSwitchCase="'required'">Bu alan gerekli</ng-container>
-        <ng-container *ngSwitchCase="'email'">E-posta geçersiz</ng-container>
-      </ng-container>
-    </div>
-  </div>
-
-  <div class="form-group">
-    <label for="password">Şifre</label>
-    <input [class.is-invalid]="error('password')"
-           autocomplete="new-password"
-           class="form-control"
-           formControlName="password"
-           id="password"
-           placeholder="Şifre"
-           type="password">
-
-    <div class="invalid-feedback">
-      <ng-container [ngSwitch]="error('password')">
-        <ng-container *ngSwitchCase="'required'">Bu alan gerekli</ng-container>
-        <ng-container *ngSwitchCase="'minlength'">Şifre en az 6 karakter olmalı</ng-container>
-        <ng-container *ngSwitchCase="'password'">Şifre en az 1 harf, 1 rakam ve 1 sembol içermeli</ng-container>
-      </ng-container>
-    </div>
-  </div>
+  <app-input formControlName="password" type="password">
+    {{'password'|translate}}
+  </app-input>
 
   <div class="d-flex justify-content-between">
-    <a class="btn btn-link" routerLink="/auth/login">Giriş yap</a>
-    <button [disabled]="formGroup.invalid" class="btn btn-primary" type="submit">Kayıt ol</button>
+    <a class="btn btn-link" routerLink="/auth/login">{{'login'|translate}}</a>
+    <button [disabled]="formGroup.invalid" class="btn btn-primary" type="submit">{{'register'|translate}}</button>
   </div>
 
   <hr class="w-75">
 
   <div class="d-flex">
-    <a class="btn btn-link flex-fill" routerLink="/auth/reset-password">Şifremi unuttum</a>
+    <a class="btn btn-link flex-fill" routerLink="/auth/reset-password">{{'forgotPassword'|translate}}</a>
   </div>
 </form>

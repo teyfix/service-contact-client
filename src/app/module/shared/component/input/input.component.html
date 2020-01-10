@@ -1,0 +1,22 @@
+<label #labelElement [for]="id">
+  <ng-content></ng-content>
+</label>
+
+<!--suppress HtmlFormInputWithoutLabel -->
+<input (blur)="onTouched()"
+       [class.is-hinted]="hint"
+       [class.is-invalid]="errorCode"
+       [formControl]="formControl"
+       [id]="id"
+       [placeholder]="placeholder || labelElement.innerText"
+       [required]="required"
+       [type]="type"
+       class="form-control">
+
+<ng-container *ngIf="!errorCode && hint">
+  <app-hint>{{hint | translate}}</app-hint>
+</ng-container>
+
+<ng-container *ngIf="errorCode">
+  <app-input-error [errorState]="errorCode"></app-input-error>
+</ng-container>

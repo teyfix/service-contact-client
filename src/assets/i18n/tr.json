@@ -1,0 +1,83 @@
+{
+  "error": "Hata",
+  "login": "Giriş yap",
+  "login.unauthorized": "E-posta ya da şifre yanlış. Şifrenizi unuttuysanız <a routerLink=\"/auth/reset-password\">burayı tıklayarak</a> sıfırlayabilirsiniz.",
+  "email": "E-posta",
+  "password": "Şifre",
+  "register": "Kayıt ol",
+  "register.conflict": "Bu e-posta adresi kullanımda. Şifrenizi unuttuysanız <a routerLink=\"/auth/reset-password\">burayı tıklayarak</a> sıfırlayabilirsiniz.",
+  "forgotPassword": "Şifremi unuttum",
+  "firstName": "Ad",
+  "lastName": "Soyad",
+  "resetPassword": "Şifre sıfırlama",
+  "resetPasswordSent": "Gelen kutunuza şifre sıfırlama bağlantısı içeren bir e-posta gönderildi.",
+  "panel": "Panel",
+  "dealers": "Bayiler",
+  "faults": "Arızalar",
+  "faultRecords": "Arıza Kayıtları",
+  "fieldTeams": "Saha Ekipleri",
+  "actions": "Eylemler",
+  "select": "Seç",
+  "emptyResult": {
+    "title": "Sonuç yok"
+  },
+  "dealer": {
+    "create": "Yeni bayi",
+    "update": "Bayiyi güncelle",
+    "plural": "Bayiler",
+    "field": {
+      "title": "İsim",
+      "phone": "Telefon",
+      "city": "Şehir"
+    },
+    "clickToCreate": "Yeni bayi oluştur",
+    "warning": {
+      "delete": "{{ title }} silinecek, onaylıyor musunuz?"
+    }
+  },
+  "fault": {
+    "create": "Yeni arıza",
+    "update": "Arızayı güncelle",
+    "plural": "Arızalar",
+    "field": {
+      "title": "Başlık"
+    },
+    "clickToCreate": "Yeni arıza oluştur",
+    "warning": {
+      "delete": "{{ title }} silinecek, onaylıyor musunuz?"
+    }
+  },
+  "faultRecord": {
+    "create": "Yeni arıza kaydı",
+    "update": "Arıza kaydını güncelle",
+    "plural": "Arıza Kayıtları",
+    "field": {
+      "city": "Şehir",
+      "fault": "Arıza",
+      "fieldTeam": "Saha Ekibi"
+    },
+    "clickToCreate": "Yeni arıza kaydı oluştur",
+    "warning": {
+      "delete": "{{ fault.title }} adlı arıza için {{ fieldTeam.title }} ekibine atanan arıza kaydı silinecek, onaylıyor musunuz?"
+    },
+    "fieldTeamOptional": "Saha ekibi seçmemeniz durumunda ilgili saha ekibini sistem atayacaktır."
+  },
+  "fieldTeam": {
+    "create": "Yeni saha ekibi",
+    "update": "Saha ekibini güncelle",
+    "plural": "Saha Ekipleri",
+    "field": {
+      "title": "İsim",
+      "city": "Şehir",
+      "phone": "Telefon",
+      "faults": "Arıza kayıtları"
+    },
+    "clickToCreate": "Yeni saha ekibi oluştur",
+    "warning": {
+      "delete": "{{ title }} silinecek, onaylıyor musunuz?"
+    }
+  },
+  "connectionProblems": "Sunucuya bağlanılamıyor",
+  "create": "Oluştur",
+  "update": "Güncelle"
+}

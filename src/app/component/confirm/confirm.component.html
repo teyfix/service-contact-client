@@ -16,7 +16,7 @@
   <hr class="w-100">
 
   <div class="d-flex justify-content-end px-2">
-    <button class="btn btn-sm btn-danger mr-3" (click)="reject()">{{rejectButton}}</button>
-    <button class="btn btn-sm btn-primary" (click)="approve()">{{approveButton}}</button>
+    <button (click)="reject()" class="btn btn-sm btn-danger mr-3">{{rejectButton}}</button>
+    <button (click)="approve()" class="btn btn-sm btn-primary">{{approveButton}}</button>
   </div>
 </div>

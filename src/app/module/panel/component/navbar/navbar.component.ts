@@ -15,10 +15,12 @@ interface MenuItem {
 })
 export class NavbarComponent implements OnInit {
   user: ReplaySubject<User>;
-  title = 'Panel';
+  title = 'panel';
   menuItems: MenuItem[] = [
-    {label: 'Dealers', routerLink: '/panel/dealers'},
-    {label: 'Technical Services', routerLink: '/panel/technical-services'},
+    {label: 'dealers', routerLink: '/panel/dealers'},
+    {label: 'faults', routerLink: '/panel/faults'},
+    {label: 'faultRecords', routerLink: '/panel/fault-records'},
+    {label: 'fieldTeams', routerLink: '/panel/field-teams'},
   ];
 
   constructor(private readonly authService: AuthService) {

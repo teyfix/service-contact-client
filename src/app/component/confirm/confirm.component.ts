@@ -7,7 +7,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./confirm.component.scss'],
 })
 export class ConfirmComponent implements OnInit {
-  title: string;
+  title = 'Uyarı';
   message: string;
   approveButton = 'Evet';
   rejectButton = 'Hayır';

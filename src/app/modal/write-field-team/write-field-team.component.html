@@ -1,0 +1,30 @@
+<div class="p-4">
+
+  <h1>{{('fieldTeam.' + (params._id ? 'update' : 'create')) | translate}}</h1>
+
+  <form (submit)="submit($event)" [formGroup]="formGroup" class="d-flex flex-column">
+    <app-input formControlName="title">
+      {{'fieldTeam.field.title'|translate}}
+    </app-input>
+
+    <app-input formControlName="phone" placeholder="+90" type="tel">
+      {{'fieldTeam.field.phone'|translate}}
+    </app-input>
+
+    <app-typeahead [ngbTypeahead]="citySearch" formControlName="city">
+      {{'fieldTeam.field.city'|translate}}
+    </app-typeahead>
+
+    <app-check-list [ngbTypeahead]="faultSearch" formControlName="faults">
+      {{'fieldTeam.field.faults'|translate}}
+    </app-check-list>
+
+    <div class="d-flex justify-content-between mt-4">
+      <a class="btn btn-danger" routerLink="/panel/field-teams">İptal</a>
+      <button [disabled]="formGroup.invalid" class="btn btn-primary" type="submit">
+        {{ (params.id ? 'save' : 'create') | translate }}
+      </button>
+    </div>
+  </form>
+
+</div>

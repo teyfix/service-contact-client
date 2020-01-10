@@ -1,0 +1,26 @@
+:host {
+  display: block;
+
+  .selected-item {
+    background-color: rgba(#000, .08);
+    padding: .1em .8em .1em .4em;
+    margin: 0 .4em .4em 0;
+    border-radius: 1em;
+    user-select: none;
+
+    .remove-item {
+      cursor: pointer;
+      padding: 0 .4em;
+
+      fa-icon {
+        line-height: .9;
+      }
+    }
+  }
+
+  app-typeahead {
+    ::ng-deep label {
+      display: none;
+    }
+  }
+}

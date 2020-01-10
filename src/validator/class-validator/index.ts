@@ -1,3 +1,4 @@
-export * from 'src/validator/class-validator/is-name';
-export * from 'src/validator/class-validator/is-password';
-export * from 'src/validator/class-validator/is-phone';
+export * from './is-name';
+export * from './is-password';
+export * from './is-phone';
+export * from 'src/validator/class-validator/is-entity';

@@ -6,7 +6,7 @@ export const JsonProxy = <T extends object>(
   reviver?: (this: any, key: string, value: any) => any,
   // for JSON.stringify
   replacer?: (this: any, key: string, value: any) => any,
-  space?: string | number
+  space?: string | number,
 ) => {
   return new Proxy(target, {
     get(t, p) {
@@ -35,6 +35,6 @@ export const JsonProxy = <T extends object>(
       }
 
       return true;
-    }
+    },
   });
 };
