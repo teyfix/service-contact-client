@@ -79,5 +79,5 @@
   },
   "connectionProblems": "Sunucuya bağlanılamıyor",
   "create": "Oluştur",
-  "update": "Güncelle"
+  "save": "Güncelle"
 }
