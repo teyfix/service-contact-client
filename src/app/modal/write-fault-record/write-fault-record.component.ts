@@ -72,7 +72,7 @@ export class WriteFaultRecordComponent extends FormComponentHelper implements On
 
   relations() {
     const {city, fault, fieldTeam} = this.formGroup.controls;
-    const truthy = () => filter<BaseEntity>(Boolean);
+    const truthy = () => filter<BaseEntity>(() => fieldTeam.valid && fieldTeam.value);
 
     this.addSubscription(
       merge(
@@ -82,7 +82,7 @@ export class WriteFaultRecordComponent extends FormComponentHelper implements On
         ),
         fault.valueChanges.pipe(
           truthy(),
-          filter(value => !value || !fieldTeam.value.faults.some(item => value._id === item._id)),
+          filter(value => !value || fieldTeam.value.faults.some(item => value._id === item._id)),
         ),
       ).subscribe(() => {
         fieldTeam.setValue(null);
