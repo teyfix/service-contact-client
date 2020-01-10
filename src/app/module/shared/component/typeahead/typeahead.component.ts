@@ -1,12 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { BaseInput } from 'src/app/module/shared/component/base-input/base-input';
-import { Observable } from 'rxjs';
+import { merge, Observable, Subject } from 'rxjs';
 import { ResultTemplateContext } from '@ng-bootstrap/ng-bootstrap/typeahead/typeahead-window';
 import { PlacementArray } from '@ng-bootstrap/ng-bootstrap/util/positioning';
 import { BooleanInput } from 'src/decorator/boolean-input';
 import { NgControl } from '@angular/forms';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+import { distinctUntilChanged, filter, mapTo } from 'rxjs/operators';
+import { NgbTypeahead, NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+
+const ngbTypeahead = Symbol();
 
 @Component({
   selector: 'app-typeahead',
@@ -24,13 +26,10 @@ export class TypeaheadComponent extends BaseInput implements OnInit {
   editable = false;
 
   @BooleanInput()
-  focusFirst: boolean;
+  focusFirst = false;
 
   @Input()
   inputFormatter: (item: any) => string;
-
-  @Input()
-  ngbTypeahead: (text: Observable<string>) => Observable<any[]>;
 
   @Input()
   resultTemplate: TemplateRef<ResultTemplateContext>;
@@ -51,10 +50,38 @@ export class TypeaheadComponent extends BaseInput implements OnInit {
   @Output()
   blur = new EventEmitter<FocusEvent>();
 
-  value;
+  @ViewChild('instance', {static: true})
+  instance: NgbTypeahead;
+
+  private value = null;
+  private focusSubject = new Subject();
+  private clickSubject = new Subject();
 
   constructor(ngControl: NgControl) {
     super(ngControl);
+  }
+
+  get ngbTypeahead(): (text: Observable<string>) => Observable<any[]> {
+    return this[ngbTypeahead];
+  }
+
+  @Input()
+  set ngbTypeahead(value: (text: Observable<string>) => Observable<any[]>) {
+    if ('function' === typeof value) {
+      this[ngbTypeahead] = (text: Observable<string>) => {
+        return value(
+          merge(
+            text,
+            merge(this.focusSubject, this.clickSubject).pipe(
+              filter(() => !this.instance.isPopupOpen()),
+              mapTo(''),
+            ),
+          ),
+        );
+      };
+    } else {
+      this[ngbTypeahead] = value;
+    }
   }
 
   ngOnInit(): void {
@@ -88,6 +115,7 @@ export class TypeaheadComponent extends BaseInput implements OnInit {
 
   writeValue(obj): void {
     this.value = obj;
+    this.instance.dismissPopup();
     this.formControl.setValue(obj);
   }
 
@@ -95,5 +123,13 @@ export class TypeaheadComponent extends BaseInput implements OnInit {
     this.value = $event.item;
     this.onChange($event.item);
     this.selectItem.next($event);
+  }
+
+  onFocus($event: FocusEvent) {
+    this.focusSubject.next();
+  }
+
+  onClick($event: MouseEvent) {
+    this.clickSubject.next();
   }
 }
